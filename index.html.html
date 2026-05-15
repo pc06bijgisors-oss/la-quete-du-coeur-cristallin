@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>La Quête du Cœur Cristallin - Édition Complète</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#C9A84C;
+  --gold-light:#E8D08A;
+  --gold-dim:#7A6230;
+  --deep:#0A0812;
+  --mid:#140F1E;
+  --surface:#1C1628;
+  --surface2:#241E34;
+  --purple:#6B3FA0;
+  --purple-light:#9B6FD0;
+  --teal:#1A7A6A;
+  --teal-light:#2BBDA0;
+  --coral:#8B3A2A;
+  --coral-light:#D4624A;
+  --text:#EDE8D8;
+  --text-dim:#9A9080;
+  --text-faint:#554E42;
+  --radius:16px;
+  --radius-sm:10px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+
+body{
+  font-family:'Crimson Pro',Georgia,serif;
+  background:var(--deep);
+  color:var(--text);
+  min-height:100vh;
+  min-height:100dvh;
+  overflow-x:hidden;
+  position:relative;
+}
+
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background:radial-gradient(ellipse at 20% 0%, rgba(107,63,160,0.15) 0%, transparent 60%),
+            radial-gradient(ellipse at 80% 100%, rgba(26,122,106,0.12) 0%, transparent 60%);
+  pointer-events:none;z-index:0;
+}
+
+.stars{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.star{position:absolute;background:#fff;border-radius:50%;animation:twinkle var(--d) ease-in-out infinite}
+@keyframes twinkle{0%,100%{opacity:var(--min-o)}50%{opacity:var(--max-o)}}
+
+.app{position:relative;z-index:1;max-width:430px;margin:0 auto;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column}
+
+/* SCREENS */
+.screen{display:none;flex-direction:column;flex:1;padding:24px 20px 32px;animation:fadeIn 0.4s ease}
+.screen.active{display:flex}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* NAV */
+.nav-back{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--gold-dim);letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;padding:4px 0 20px;font-family:'Cinzel',serif;font-weight:400}
+.nav-back::before{content:'←';font-size:16px}
+.nav-back:active{color:var(--gold)}
+
+/* ORNAMENT */
+.ornament{text-align:center;color:var(--gold-dim);font-size:18px;letter-spacing:8px;margin:8px 0}
+.divider{border:none;border-top:1px solid rgba(201,168,76,0.2);margin:16px 0}
+
+/* BADGES */
+.badge{display:inline-block;font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;padding:4px 12px;border-radius:20px;border:1px solid;margin-bottom:12px}
+.badge-purple{background:rgba(107,63,160,0.2);border-color:rgba(155,111,208,0.4);color:var(--purple-light)}
+.badge-gold{background:rgba(201,168,76,0.15);border-color:rgba(201,168,76,0.35);color:var(--gold)}
+.badge-teal{background:rgba(26,122,106,0.2);border-color:rgba(43,189,160,0.35);color:var(--teal-light)}
+.badge-coral{background:rgba(139,58,42,0.25);border-color:rgba(212,98,74,0.4);color:var(--coral-light)}
+.badge-blue{background:rgba(30,60,120,0.25);border-color:rgba(80,140,220,0.35);color:#7AAEF0}
+.badge-red{background:rgba(212,60,60,0.2);border-color:rgba(212,60,60,0.4);color:#D45050}
+
+/* HEADINGS */
+h1{font-family:'Cinzel',serif;font-size:28px;font-weight:900;color:var(--gold);line-height:1.2;letter-spacing:0.02em;text-align:center;text-shadow:0 0 40px rgba(201,168,76,0.3)}
+h2{font-family:'Cinzel',serif;font-size:20px;font-weight:600;color:var(--gold-light);line-height:1.3;letter-spacing:0.02em}
+h3{font-family:'Cinzel',serif;font-size:15px;font-weight:600;color:var(--gold);letter-spacing:0.05em}
+
+/* LORE TEXT */
+.lore{font-family:'Crimson Pro',serif;font-size:17px;font-style:italic;color:var(--text-dim);line-height:1.8;text-align:center;padding:0 8px}
+.lore-box{background:rgba(201,168,76,0.05);border:1px solid rgba(201,168,76,0.15);border-radius:var(--radius);padding:20px;margin:16px 0}
+.lore-box .lore{text-align:left;font-size:16px}
+
+/* CARDS */
+.card{background:var(--surface);border:1px solid rgba(201,168,76,0.15);border-radius:var(--radius);padding:20px;margin-bottom:12px}
+.card-dim{background:var(--surface);border:1px solid rgba(255,255,255,0.05);border-radius:var(--radius);padding:16px;margin-bottom:10px}
+
+/* BUTTONS */
+.btn{display:block;width:100%;padding:16px;font-family:'Cinzel',serif;font-size:14px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;border-radius:var(--radius-sm);cursor:pointer;transition:all 0.2s;border:none;text-align:center}
+.btn:active{transform:scale(0.97)}
+.btn-primary{background:linear-gradient(135deg,rgba(201,168,76,0.9),rgba(232,208,138,0.8));color:var(--deep);box-shadow:0 4px 20px rgba(201,168,76,0.25)}
+.btn-primary:active{box-shadow:0 2px 10px rgba(201,168,76,0.2)}
+.btn-ghost{background:transparent;color:var(--gold-dim);border:1px solid rgba(201,168,76,0.25)}
+.btn-ghost:active{background:rgba(201,168,76,0.08)}
+.btn-success{background:linear-gradient(135deg,rgba(43,189,160,0.8),rgba(43,189,160,0.6));color:var(--deep)}
+.btn-danger{background:rgba(139,58,42,0.3);color:var(--coral-light);border:1px solid rgba(212,98,74,0.3)}
+.btn-purple{background:rgba(107,63,160,0.4);color:var(--purple-light);border:1px solid rgba(155,111,208,0.4)}
+
+/* CHARACTERS */
+.char-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0}
+.char-card{background:var(--surface);border:1px solid rgba(201,168,76,0.15);border-radius:var(--radius);padding:16px 12px;cursor:pointer;transition:all 0.25s;text-align:center;position:relative;overflow:hidden}
+.char-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(107,63,160,0.05),transparent);opacity:0;transition:opacity 0.3s}
+.char-card:active{transform:scale(0.96)}
+.char-card.selected{border-color:var(--gold);background:rgba(201,168,76,0.08)}
+.char-card.selected::before{opacity:1}
+.char-icon{font-size:32px;margin-bottom:10px;display:block}
+.char-name{font-family:'Cinzel',serif;font-size:13px;font-weight:600;color:var(--gold-light);margin-bottom:6px}
+.char-desc{font-size:13px;color:var(--text-dim);line-height:1.5;font-style:italic}
+
+/* PROGRESS */
+.progress-row{display:flex;align-items:center;gap:6px;margin:16px 0}
+.prog-dot{width:32px;height:32px;border-radius:50%;border:1px solid rgba(201,168,76,0.25);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:11px;color:var(--text-faint);flex-shrink:0;background:var(--surface)}
+.prog-dot.done{background:rgba(43,189,160,0.15);border-color:var(--teal-light);color:var(--teal-light)}
+.prog-dot.current{background:rgba(201,168,76,0.15);border-color:var(--gold);color:var(--gold)}
+.prog-line{flex:1;height:1px;background:rgba(201,168,76,0.12)}
+
+/* ECLATS */
+.eclat-row{display:flex;gap:10px;justify-content:center;margin:16px 0}
+.eclat{width:48px;height:48px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:22px;transition:all 0.4s;position:relative}
+.eclat.found{border-color:rgba(43,189,160,0.5);background:rgba(43,189,160,0.12);box-shadow:0 0 20px rgba(43,189,160,0.2);animation:pulse-eclat 2s ease-in-out infinite}
+@keyframes pulse-eclat{0%,100%{box-shadow:0 0 20px rgba(43,189,160,0.2)}50%{box-shadow:0 0 30px rgba(43,189,160,0.4)}}
+.eclat-label{font-family:'Cinzel',serif;font-size:9px;color:var(--text-faint);text-align:center;margin-top:4px;letter-spacing:0.1em}
+
+/* LOCATIONS */
+.loc-grid{display:flex;flex-direction:column;gap:10px;margin:16px 0}
+.loc-card{background:var(--surface);border:1px solid rgba(255,255,255,0.06);border-radius:var(--radius);padding:16px 18px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:14px}
+.loc-card:active{transform:scale(0.98)}
+.loc-card.available{border-color:rgba(201,168,76,0.25)}
+.loc-card.done{border-color:rgba(43,189,160,0.3);background:rgba(43,189,160,0.05)}
+.loc-card.locked{opacity:0.45;cursor:not-allowed}
+.loc-icon{font-size:26px;flex-shrink:0;width:40px;text-align:center}
+.loc-info{flex:1}
+.loc-name{font-family:'Cinzel',serif;font-size:14px;font-weight:600;color:var(--gold-light);margin-bottom:3px}
+.loc-desc{font-size:13px;color:var(--text-dim)}
+.loc-status{font-size:18px;flex-shrink:0}
+
+/* RIDDLE */
+.riddle-box{background:rgba(201,168,76,0.04);border:1px solid rgba(201,168,76,0.18);border-radius:var(--radius);padding:24px 20px;margin:16px 0;text-align:center}
+.riddle-poem{font-family:'Crimson Pro',serif;font-style:italic;font-size:18px;color:var(--text);line-height:2;margin-bottom:16px}
+.riddle-poem em{color:var(--gold-light)}
+
+/* HINT */
+.hint-box{background:rgba(120,90,200,0.1);border:1px solid rgba(155,111,208,0.3);border-radius:var(--radius-sm);padding:14px 16px;margin:12px 0;font-size:14px;color:var(--purple-light);font-style:italic;line-height:1.6}
+
+/* SYMBOLS */
+.symbol-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:20px 0}
+.sym-btn{background:var(--surface2);border:1px solid rgba(201,168,76,0.2);border-radius:var(--radius);padding:20px;font-size:40px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;aspect-ratio:1;position:relative;overflow:hidden}
+.sym-btn:active{transform:scale(0.92)}
+.sym-btn.wrong{background:rgba(139,58,42,0.25);border-color:var(--coral-light);animation:shake 0.35s}
+.sym-btn.correct{background:rgba(43,189,160,0.15);border-color:var(--teal-light)}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+
+/* BOOKS */
+.books-source{display:flex;flex-direction:column;gap:8px;margin:12px 0}
+.book-item{background:var(--surface2);border:1px solid rgba(201,168,76,0.2);border-radius:var(--radius-sm);padding:14px 16px;font-family:'Crimson Pro',serif;font-size:16px;color:var(--text);cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:12px;user-select:none}
+.book-item:active{transform:scale(0.97)}
+.book-item.selected{border-color:var(--gold);background:rgba(201,168,76,0.08)}
+.book-item.placed{opacity:0.35;cursor:not-allowed}
+.book-num{font-family:'Cinzel',serif;font-size:12px;color:var(--gold-dim);width:20px;text-align:center;flex-shrink:0}
+
+.books-target{display:flex;flex-direction:column;gap:8px;margin:12px 0}
+.slot{background:var(--surface);border:1px dashed rgba(201,168,76,0.2);border-radius:var(--radius-sm);padding:14px 16px;font-size:14px;color:var(--text-faint);font-style:italic;min-height:52px;display:flex;align-items:center;gap:10px;transition:all 0.2s;cursor:pointer}
+.slot.has-book{border-style:solid;border-color:rgba(201,168,76,0.3);background:rgba(201,168,76,0.05);color:var(--text)}
+.slot.highlight{border-color:var(--gold);background:rgba(201,168,76,0.08)}
+.slot-num{font-family:'Cinzel',serif;font-size:11px;color:var(--gold-dim);width:20px;flex-shrink:0}
+.slot-remove{margin-left:auto;font-size:16px;color:var(--text-faint);cursor:pointer;padding:4px}
+
+/* INPUT */
+.riddle-input{width:100%;padding:16px 18px;background:var(--surface2);border:1px solid rgba(201,168,76,0.25);border-radius:var(--radius-sm);font-family:'Crimson Pro',serif;font-size:18px;color:var(--text);outline:none;text-align:center;margin:12px 0;transition:border-color 0.2s}
+.riddle-input:focus{border-color:var(--gold)}
+.riddle-input::placeholder{color:var(--text-faint)}
+
+/* MSG */
+.msg{font-family:'Cinzel',serif;font-size:12px;letter-spacing:0.06em;text-align:center;min-height:20px;padding:8px 0;transition:all 0.3s}
+.msg.good{color:var(--teal-light)}
+.msg.bad{color:var(--coral-light)}
+
+/* QUIZ */
+.quiz-card{background:var(--surface);border:1px solid rgba(201,168,76,0.1);border-radius:var(--radius);padding:18px;margin-bottom:12px}
+.quiz-question{font-family:'Cinzel',serif;font-size:13px;font-weight:600;color:var(--gold-light);margin-bottom:12px;line-height:1.5}
+.quiz-options{display:flex;flex-direction:column;gap:8px}
+.quiz-btn{background:var(--surface2);border:1px solid rgba(201,168,76,0.2);border-radius:var(--radius-sm);padding:12px 16px;text-align:left;font-family:'Crimson Pro',serif;font-size:15px;color:var(--text);cursor:pointer;transition:all 0.15s}
+.quiz-btn:active{transform:scale(0.98);background:rgba(201,168,76,0.05)}
+
+/* COMBAT */
+.combat-box{background:rgba(212,60,60,0.05);border:1px solid rgba(212,60,60,0.3);border-radius:var(--radius);padding:20px;margin:16px 0;text-align:center}
+.combat-stats{display:flex;justify-content:space-between;margin-bottom:16px;font-family:'Cinzel',serif;font-size:12px}
+.bar-container{background:var(--surface2);border:1px solid rgba(255,255,255,0.1);height:8px;border-radius:4px;overflow:hidden;margin-bottom:16px}
+.bar-fill{height:100%;transition:width 0.3s ease}
+.hp-fill{background:var(--teal-light)}
+.mp-fill{background:var(--purple-light)}
+.dragon-hp-fill{background:#D45050}
+.combat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+
+/* FINALE */
+.choice-card{background:var(--surface);border:1px solid rgba(255,255,255,0.08);border-radius:var(--radius);padding:20px;margin-bottom:10px;cursor:pointer;transition:all 0.2s;display:flex;gap:14px;align-items:flex-start}
+.choice-card:active{transform:scale(0.97)}
+.choice-card:hover,.choice-card:focus{border-color:rgba(201,168,76,0.3);background:rgba(201,168,76,0.05)}
+.choice-icon{font-size:28px;flex-shrink:0}
+.choice-title{font-family:'Cinzel',serif;font-size:14px;font-weight:600;color:var(--gold-light);margin-bottom:5px}
+.choice-desc{font-size:14px;color:var(--text-dim);font-style:italic;line-height:1.5}
+
+/* WIN */
+.win-box{background:linear-gradient(135deg,rgba(43,189,160,0.08),rgba(107,63,160,0.08));border:1px solid rgba(43,189,160,0.3);border-radius:var(--radius);padding:28px 24px;text-align:center;margin:16px 0}
+.win-title{font-family:'Cinzel',serif;font-size:22px;font-weight:900;color:var(--teal-light);margin-bottom:12px;letter-spacing:0.03em}
+.win-text{font-family:'Crimson Pro',serif;font-size:17px;color:var(--text-dim);line-height:1.8;font-style:italic}
+
+/* HUB hint */
+.hub-hint{background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.25);border-radius:var(--radius-sm);padding:14px 16px;font-family:'Cinzel',serif;font-size:12px;letter-spacing:0.05em;color:var(--gold);text-align:center;margin-top:8px}
+
+/* ATTEMPTS */
+.attempts{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.1em;color:var(--text-faint);text-align:center;text-transform:uppercase}
+.scroll-area{overflow-y:auto;flex:1}
+</style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+
+<div class="app">
+
+<div class="screen active" id="s-prologue">
+  <div style="text-align:center;padding-top:16px">
+    <div class="ornament">✦ ✦ ✦</div>
+    <h1 style="margin:16px 0 8px">Le Cœur<br>Cristallin</h1>
+    <p style="font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.2em;color:var(--gold-dim);text-transform:uppercase;margin-bottom:24px">La Quête de Gesoritum</p>
+  </div>
+
+  <div class="lore-box">
+    <p class="lore">Autrefois, le royaume de <em style="color:var(--gold-light)">Gesoritum</em> rayonnait d'une magie harmonieuse, protégée par un artefact ancien : le Cœur Cristallin.</p>
+    <br>
+    <p class="lore" style="text-align:left">Mais une nuit, la magie noire de <em style="color:var(--coral-light)">Tafar</em> fragmenta le Cœur en trois Éclats dispersés dans le château. Depuis, les couloirs changent, les sortilèges se détraquent…</p>
+  </div>
+
+  <div class="divider"></div>
+  <h3 style="text-align:center;margin-bottom:16px;letter-spacing:0.1em">Choisissez votre héros</h3>
+
+  <div class="char-grid">
+    <div class="char-card" onclick="selectChar(this,'chevalier')">
+      <span class="char-icon">⚔️</span>
+      <div class="char-name">Chevalier</div>
+      <div class="char-desc">Courageux, doué pour les épreuves d'adresse</div>
+    </div>
+    <div class="char-card" onclick="selectChar(this,'mage')">
+      <span class="char-icon">🔮</span>
+      <div class="char-name">La Mage</div>
+      <div class="char-desc">Maîtrise les runes, excellente en logique</div>
+    </div>
+    <div class="char-card" onclick="selectChar(this,'fee')">
+      <span class="char-icon">🌟</span>
+      <div class="char-name">La Fée</div>
+      <div class="char-desc">Observatrice, communique avec la magie</div>
+    </div>
+    <div class="char-card" onclick="selectChar(this,'voleur')">
+      <span class="char-icon">🗝️</span>
+      <div class="char-name">Voleur</div>
+      <div class="char-desc">Agile, expert en mécanismes secrets</div>
+    </div>
+  </div>
+
+  <div id="char-hint-prologue" class="hint-box" style="display:none"></div>
+
+  <button class="btn btn-primary" id="start-btn" onclick="startGame()" style="display:none;margin-top:8px">Entrer dans le château →</button>
+  <div style="height:20px"></div>
+</div>
+
+<div class="screen" id="s-hub">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+    <div>
+      <div class="badge badge-gold" id="hub-badge">Chevalier</div>
+      <h2 style="font-size:17px">Château de Gisors</h2>
+    </div>
+    <div style="text-align:right">
+      <div style="font-family:'Cinzel',serif;font-size:9px;color:var(--text-faint);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px">Éclats</div>
+      <div class="eclat-row" style="margin:0;gap:6px">
+        <div><div class="eclat" id="e1">💎</div></div>
+        <div><div class="eclat" id="e2">💎</div></div>
+        <div><div class="eclat" id="e3">💎</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="progress-row" id="hub-progress"></div>
+  <div class="divider"></div>
+
+  <p style="font-size:15px;color:var(--text-dim);font-style:italic;margin-bottom:16px">Explorez le château et trouvez les trois Éclats du Cœur Cristallin.</p>
+
+  <div class="loc-grid" id="loc-grid"></div>
+  <div id="hub-hint" class="hub-hint" style="display:none">✦ Les Éclats et le combat contre le Boss sont réunis — montez à la Tour ! ✦</div>
+</div>
+
+<div class="screen" id="s-cour">
+  <div class="nav-back" onclick="goHub()">Retour au château</div>
+  <div class="badge badge-gold">Épreuve I — Observation</div>
+  <h2>La Cour intérieure</h2>
+  
+  <div class="lore-box">
+    <p class="lore" style="text-align:left;font-size:15px">Une fontaine ancienne est gravée de quatre symboles mystérieux. Une voix murmure depuis les pierres…</p>
+  </div>
+
+  <div class="riddle-box">
+    <p class="riddle-poem">"Je veille le jour,<br>je veille la nuit,<br>Je brille sans feu,<br>Et sans moi, la magie fuit."</p>
+    <p style="font-size:13px;color:var(--text-faint);font-style:italic">Pressez le bon symbole sur la fontaine</p>
+  </div>
+
+  <div id="hint-cour" class="hint-box" style="display:none"></div>
+
+  <div class="symbol-grid">
+    <button class="sym-btn" id="sym-sun" onclick="tryCour('sun',this)" aria-label="Soleil">☀️</button>
+    <button class="sym-btn" id="sym-moon" onclick="tryCour('moon',this)" aria-label="Lune">🌙</button>
+    <button class="sym-btn" id="sym-star" onclick="tryCour('star',this)" aria-label="Étoile">⭐</button>
+    <button class="sym-btn" id="sym-leaf" onclick="tryCour('leaf',this)" aria-label="Feuille">🌿</button>
+  </div>
+
+  <div class="msg" id="cour-msg"></div>
+  <div class="attempts" id="cour-att"></div>
+</div>
+
+<div class="screen" id="s-biblio">
+  <div class="nav-back" onclick="goHub()">Retour au château</div>
+  <div class="badge badge-purple">Épreuve II — Logique</div>
+  <h2>La Bibliothèque ensorcelée</h2>
+
+  <div class="lore-box">
+    <p class="lore" style="text-align:left;font-size:15px">Trois livres flottent dans l'air, hors de tout ordre. Une inscription dorée brille au mur…</p>
+  </div>
+
+  <div class="riddle-box">
+    <p class="riddle-poem">"Le temps ne s'inverse jamais."</p>
+    <p style="font-size:13px;color:var(--text-faint);font-style:italic">Tapez un livre pour le sélectionner, puis tapez un emplacement</p>
+  </div>
+
+  <div id="hint-biblio" class="hint-box" style="display:none"></div>
+
+  <h3 style="font-size:12px;letter-spacing:0.1em;color:var(--text-faint);text-transform:uppercase;margin-bottom:8px">Livres disponibles</h3>
+  <div class="books-source" id="books-source"></div>
+
+  <h3 style="font-size:12px;letter-spacing:0.1em;color:var(--text-faint);text-transform:uppercase;margin:16px 0 8px">Ordre à reconstituer</h3>
+  <div class="books-target" id="books-target"></div>
+
+  <div class="msg" id="biblio-msg"></div>
+
+  <div style="display:flex;gap:10px;margin-top:8px">
+    <button class="btn btn-ghost" onclick="resetBiblio()" style="flex:1">Réinitialiser</button>
+    <button class="btn btn-primary" onclick="checkBiblio()" style="flex:2">Valider l'ordre</button>
+  </div>
+  <div style="height:20px"></div>
+</div>
+
+<div class="screen" id="s-remparts">
+  <div class="nav-back" onclick="goHub()">Retour au château</div>
+  <div class="badge badge-coral">Épreuve III — Infiltration</div>
+  <h2>Les Remparts</h2>
+
+  <div class="lore-box">
+    <p class="lore" style="text-align:left;font-size:15px">Les bannières sont protégées. Cherchez le code secret à 4 chiffres caché quelque part dans le village pour ouvrir la porte !</p>
+  </div>
+
+  <div id="hint-remparts" class="hint-box" style="display:none"></div>
+
+  <div class="riddle-box">
+    <p class="riddle-poem">"Un chiffre à quatre têtes pour ouvrir le chemin."</p>
+  </div>
+
+  <input class="riddle-input" id="remparts-input" placeholder="Code à 4 chiffres…" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="numeric" maxlength="4">
+
+  <button class="btn btn-primary" onclick="checkRemparts()">Ouvrir la porte</button>
+
+  <div class="msg" id="remparts-msg"></div>
+  <div class="attempts" id="remparts-att"></div>
+  <div style="height:20px"></div>
+</div>
+
+<div class="screen" id="s-cachots">
+  <div class="nav-back" onclick="goHub()">Retour au château</div>
+  <div class="badge badge-blue">Épreuve IV — Énigme</div>
+  <h2>Les Cachots oubliés</h2>
+
+  <div class="lore-box">
+    <p class="lore" style="text-align:left;font-size:15px">Une porte de fer se dresse, couverte de rouille et de mystère. Une inscription en vieilles runes est gravée…</p>
+  </div>
+
+  <div class="riddle-box">
+    <p class="riddle-poem">"Plus je suis plein,<br>moins je pèse."</p>
+    <p style="font-size:13px;color:var(--text-faint);font-style:italic">Tapez votre réponse pour ouvrir la porte</p>
+  </div>
+
+  <div id="hint-cachots" class="hint-box" style="display:none"></div>
+
+  <input class="riddle-input" id="cachots-input" placeholder="Votre réponse…" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="text">
+
+  <button class="btn btn-primary" onclick="checkCachots()">Ouvrir la porte</button>
+
+  <div class="msg" id="cachots-msg"></div>
+  <div class="attempts" id="cachots-att"></div>
+  <div style="height:20px"></div>
+</div>
+
+<div class="screen" id="s-jardin">
+  <div class="nav-back" onclick="goHub()">Retour au château</div>
+  <div class="badge badge-teal">Épreuve V — Jardinier</div>
+  <h2>Le Jardinier Mystique</h2>
+
+  <div class="lore-box">
+    <p class="lore" style="text-align:left;font-size:15px">Au détour d'un vieux bosquet, un vieux chêne vous parle en s'étirant : "Pour obtenir mon essence, résolvez cette devinette".</p>
+  </div>
+
+  <div class="riddle-box">
+    <p class="riddle-poem">"Je commence la nuit et termine l'été. Qui suis-je ?"</p>
+  </div>
+
+  <div id="hint-jardin" class="hint-box" style="display:none"></div>
+
+  <input class="riddle-input" id="jardin-input" placeholder="Votre réponse…" autocomplete="off">
+  <button class="btn btn-primary" onclick="checkJardin()">Valider</button>
+
+  <div class="msg" id="jardin-msg"></div>
+  <div class="attempts" id="jardin-att"></div>
+  <div style="height:20px"></div>
+</div>
+
+<div class="screen" id="s-statues">
+  <div class="nav-back" onclick="goHub()">Retour au château</div>
+  <div class="badge badge-purple">Épreuve VI — Statues</div>
+  <h2>Le Rituel des Statues</h2>
+
+  <div class="lore-box">
+    <p class="lore" style="text-align:left;font-size:15px">La salle des gardes est composée de trois statues d'acier. Il faut les aligner dans l'ordre croissant de leur poids magique.</p>
+  </div>
+
+  <div class="riddle-box">
+    <p class="riddle-poem">"La pierre est plus lourde que le vent. Le métal est plus lourd que la pierre."</p>
+  </div>
+
+  <div id="hint-statues" class="hint-box" style="display:none"></div>
+
+  <div class="symbol-grid">
+    <button class="sym-btn" onclick="tryStatue('vent')">💨<br><span style="font-size:11px">Vent</span></button>
+    <button class="sym-btn" onclick="tryStatue('pierre')">🪨<br><span style="font-size:11px">Pierre</span></button>
+    <button class="sym-btn" onclick="tryStatue('metal')">⚔️<br><span style="font-size:11px">Métal</span></button>
+  </div>
+
+  <div style="margin-top:12px;text-align:center;color:var(--text-dim);font-style:italic">Ordre sélectionné : <span id="statue-seq" style="color:var(--gold)">Aucun</span></div>
+  
+  <div style="display:flex;gap:10px;margin-top:12px">
+    <button class="btn btn-ghost" onclick="resetStatues()" style="flex:1">Vider</button>
+    <button class="btn btn-success" onclick="checkStatues()" style="flex:2">Valider l'ordre</button>
+  </div>
+
+  <div class="msg" id="statues-msg"></div>
+  <div style="height:20px"></div>
+</div>
+
+<div class="screen" id="s-quiz">
+  <div class="nav-back" onclick="goHub()">Retour au château</div>
+  <div class="badge badge-gold">Le Quiz — Histoire de Gisors</div>
+  <h2>Quiz : Connaissance du Donjon</h2>
+
+  <div class="lore-box">
+    <p class="lore" style="text-align:left;font-size:14px">Testez vos connaissances sur l'histoire réelle du château de Gisors pour mériter la confiance des lieux.</p>
+  </div>
+
+  <div id="quiz-container"></div>
+  <div class="msg" id="quiz-msg"></div>
+  <div style="height:20px"></div>
+</div>
+
+<div class="screen" id="s-combat">
+  <div class="nav-back" onclick="goHub()">Fuir le combat (retour au château)</div>
+  <div class="badge badge-red">Combat de Boss — Le Dragon Gardien</div>
+  <h2>Le Dragon d'Ombre</h2>
+
+  <div class="combat-box">
+    <p class="lore" style="text-align:left;font-size:14px;color:#eee">Une ombre titanesque bloque l'accès à l'autel de cristal. Un dragon ancestral protège le passage de son haleine de feu !</p>
+  </div>
+
+  <div class="combat-stats">
+    <div>Héros PV: <span id="hero-hp" style="color:var(--teal-light)">100</span> / 100</div>
+    <div>Héros Mana: <span id="hero-mp" style="color:var(--purple-light)">50</span> / 50</div>
+  </div>
+  <div class="bar-container"><div id="hero-hp-bar" class="bar-fill hp-fill" style="width:100%"></div></div>
+  <div class="bar-container"><div id="hero-mp-bar" class="bar-fill mp-fill" style="width:100%"></div></div>
+
+  <div class="combat-stats">
+    <div>Dragon PV: <span id="dragon-hp" style="color:var(--coral-light)">100</span> / 100</div>
+  </div>
+  <div class="bar-container"><div id="dragon-hp-bar" class="bar-fill dragon-hp-fill" style="width:100%"></div></div>
+
+  <div style="font-family:'Cinzel',serif;font-size:12px;color:var(--text-faint);text-align:center;margin-bottom:12px">Actions disponibles</div>
+  <div class="combat-grid">
+    <button class="btn btn-primary" onclick="combatAction('attack')">⚔️ Attaque</button>
+    <button class="btn btn-success" onclick="combatAction('heal')">🌿 Soin (20 Mana)</button>
+  </div>
+  <div class="combat-grid">
+    <button class="btn btn-purple" onclick="combatAction('spell')">🔮 Sortilège (30 Mana)</button>
+    <button class="btn btn-ghost" onclick="combatAction('rest')">💤 Repos (+20 Mana)</button>
+  </div>
+
+  <div class="msg" id="combat-msg" style="min-height:45px;margin-top:12px"></div>
+</div>
+
+<div class="screen" id="s-tour">
+  <div class="nav-back" onclick="goHub()">Retour au château</div>
+  <div class="badge badge-purple">Épreuve Finale</div>
+  <h2>La Tour du Mage</h2>
+
+  <div id="tour-locked">
+    <div class="lore-box">
+      <p class="lore" style="font-size:15px">Il vous manque des Éclats ou le combat contre le Boss n'est pas terminé. Retournez explorer le château avant d'accéder à l'autel.</p>
+    </div>
+    <div class="eclat-row" style="margin:20px 0">
+      <div><div class="eclat" id="t-e1">💎</div><div class="eclat-label">Éclat I</div></div>
+      <div><div class="eclat" id="t-e2">💎</div><div class="eclat-label">Éclat II</div></div>
+      <div><div class="eclat" id="t-e3">💎</div><div class="eclat-label">Éclat III</div></div>
+    </div>
+    <button class="btn btn-ghost" onclick="goHub()">← Explorer davantage</button>
+  </div>
+
+  <div id="tour-open" style="display:none">
+    <div class="lore-box">
+      <p class="lore" style="text-align:left;font-size:15px">Vous gravissez les marches en spirale. Au sommet, un autel de pierre attend. Les trois Éclats pulsent entre vos mains…</p>
+    </div>
+
+    <div id="tour-step1">
+      <div class="riddle-box">
+        <p class="riddle-poem" style="font-size:16px">Les portes de la Tour du Mage ne s'ouvrent pas.<br>Oh non, que s'est-il passé ?</p>
+        <p style="font-size:13px;color:var(--text-dim);font-style:italic;line-height:1.6">Il semble qu'un mécanisme caché ou une dernière énigme bloque encore le passage vers la Tour du Mage. Pour percer ce mystère et ouvrir enfin ces portes, regardons de plus près ce qui nous entoure. Avez-vous remarqué un symbole, une inscription particulière dans le village ?</p>
+      </div>
+      <div class="hint-box">
+        Indice : Une inscription gravée sur le tour du village réagit à ce mot mystérieux. Il s'agit du Buisson de Bleu, cette ancienne forêt du Vexin normand située entre Saint-Paër et le château de Gisors.
+      </div>
+      <input class="riddle-input" id="tour-input" placeholder="Mot mystérieux…" autocomplete="off">
+      <button class="btn btn-primary" onclick="checkTourPassword()">Valider le mot</button>
+      <div class="msg" id="tour-msg"></div>
+    </div>
+
+    <div id="tour-choices" style="display:none">
+      <div class="riddle-box">
+        <p class="riddle-poem" style="font-size:16px">Les Éclats fusionnent.<br>Que faire du <em style="color:var(--gold-light)">Cœur Cristallin</em> ?</p>
+      </div>
+
+      <div class="choice-card" onclick="finalChoice('mage')" tabindex="0">
+        <div class="choice-icon">🔮</div>
+        <div>
+          <div class="choice-title">Confier le Cœur à la Mage</div>
+          <div class="choice-desc">Laisser la sagesse guider la magie du royaume pour l'éternité</div>
+        </div>
+      </div>
+      <div class="choice-card" onclick="finalChoice('briser')" tabindex="0">
+        <div class="choice-icon">💥</div>
+        <div>
+          <div class="choice-title">Le briser — libérer toute la magie</div>
+          <div class="choice-desc">Une explosion de pouvoir aux conséquences incertaines…</div>
+        </div>
+      </div>
+      <div class="choice-card" onclick="finalChoice('sceller')" tabindex="0">
+        <div class="choice-icon">🏰</div>
+        <div>
+          <div class="choice-title">Le sceller à nouveau</div>
+          <div class="choice-desc">Restaurer l'équilibre ancien et protéger le royaume pour toujours</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="screen" id="s-fin">
+  <div class="ornament" style="padding-top:16px">✦ ✦ ✦</div>
+  <h1 style="margin:16px 0">Épilogue</h1>
+  <div class="win-box">
+    <div class="win-title" id="fin-title"></div>
+    <p class="win-text" id="fin-text"></p>
+  </div>
+  <div class="lore-box">
+    <p class="lore" style="text-align:left;font-size:16px" id="fin-epilogue"></p>
+  </div>
+  <div class="ornament" style="margin:16px 0">⚜ ⚜ ⚜</div>
+  <button class="btn btn-primary" onclick="restartGame()">Recommencer l'aventure</button>
+  <div style="height:24px"></div>
+</div>
+
+</div><script>
+// --- STARS ---
+(function(){
+  var c=document.getElementById('stars');
+  for(var i=0;i<60;i++){
+    var s=document.createElement('div');
+    s.className='star';
+    var sz=Math.random()*2+0.5;
+    var minO=Math.random()*0.1;
+    var maxO=Math.random()*0.5+0.1;
+    s.style.cssText='width:'+sz+'px;height:'+sz+'px;top:'+Math.random()*100+'%;left:'+Math.random()*100+'%;--d:'+(Math.random()*4+2)+'s;--min-o:'+minO+';--max-o:'+maxO+';animation-delay:'+(Math.random()*4)+'s';
+    c.appendChild(s);
+  }
+})();
+
+// --- STATE ---
+var G = {
+  char: null,
+  eclats: [false,false,false],
+  courDone: false, biblioDone: false, rempartsDone: false, cachotsDone: false,
+  jardinDone: false, statuesDone: false, quizDone: false, combatDone: false,
+  courAtt: 0, cachAtt: 0, rempartsAtt: 0, jardinAtt: 0,
+  heroHp: 100, heroMp: 50, dragonHp: 100
+};
+
+var HINTS = {
+  chevalier: {
+    cour: "⚔️ Chevalier : « Un chevalier veille la nuit comme le jour. L'étoile guide les armées dans l'obscurité… »",
+    biblio: "⚔️ Chevalier : « Mes ancêtres lisaient les chroniques dans l'ordre des batailles — passé d'abord, avenir en dernier. »",
+    remparts: "⚔️ Chevalier : « Les villageois parlent d'un code gravé près de la vieille fontaine ou dans les ruelles… Cherchez les 4 chiffres ! »",
+    cachots: "⚔️ Chevalier : « Ce qui est plein de vide... c'est le vide lui-même. »",
+    jardin: "⚔️ Chevalier : « Le temps des vacances est lié à l'été, l'étoile polaire commence la nuit. Pensez au mot... Nuit d'été ? Non, observez l'initiale de la nuit et la fin de l'été. »",
+    statues: "⚔️ Chevalier : « Le poids magique dépend de la densité, le métal l'emporte sur la pierre, qui elle-même surpasse le vent. »"
+  },
+  mage: {
+    cour: "🔮 Mage : « La lune reflète la lumière du soleil mais ne brille pas de sa propre force. Pensez à ce qui ne s'éteint jamais. »",
+    biblio: "🔮 Mage : « Pensez à l'ordre chronologique des temps : Présent, Passé, Futur. Non, attendez... le temps s'écoule du Passé vers le Futur. »",
+    remparts: "🔮 Mage : « L'arpenteur des lieux a laissé une trace : le code de la porte s'obtient avec 4 chiffres en examinant les anciennes bannières. »",
+    cachots: "🔮 Mage : « Un sac ou une outre, peut-être ? Plus on le remplit, plus il est léger car il s'envole... non, réfléchissons à la matière. »",
+    jardin: "🔮 Mage : « La lettre qui commence le mot 'Nuit' et celle qui termine 'été'. »",
+    statues: "🔮 Mage : « L'ordre croissant selon la matière et le poids. »"
+  },
+  fee: {
+    cour: "🌟 Fée : « La magie est comme la lumière du jour : elle éclaire sans jamais faillir. »",
+    biblio: "🌟 Fée : « Le passé vient en premier, suivi du présent, puis du futur. »",
+    remparts: "🌟 Fée : « Les quatre chiffres se trouvent dans les murmures du village : 4 - 5 - 2 - 8. »",
+    cachots: "🌟 Fée : « Pensez à une éponge ou un ballon. »",
+    jardin: "🌟 Fée : « Les saisons et le jour : N... É... »",
+    statues: "🌟 Fée : « De l'élément le plus léger au plus solide. »"
+  },
+  voleur: {
+    cour: "🗝️ Voleur : « L'étoile ne brille qu'en l'absence de soleil. Mais il faut de la magie pour les éléments. »",
+    biblio: "🗝️ Voleur : « Le premier chapitre, le second, puis le troisième. »",
+    remparts: "🗝️ Voleur : « Le code est : 1 4 1 8. »",
+    cachots: "🗝️ Voleur : « Le tonneau de vin se vide pour peser moins lourd. Donc s'il est plein, il pèse... »",
+    jardin: "🗝️ Voleur : « Le mot commence par N (comme Nuit) et se termine par E (comme Été) : NE... »",
+    statues: "🗝️ Voleur : « L'ordre des statues, de bas en haut. »"
+  }
+};
+
+// --- NAVIGATION ---
+function selectChar(el, charName) {
+  document.querySelectorAll('.char-card').forEach(function(c) {
+    c.classList.remove('selected');
+  });
+  el.classList.add('selected');
+  G.char = charName;
+
+  var hintEl = document.getElementById('char-hint-prologue');
+  var startBtn = document.getElementById('start-btn');
+  
+  if (G.char && HINTS[G.char]) {
+    var charLabel = charName.charAt(0).toUpperCase() + charName.slice(1);
+    hintEl.textContent = "Héros sélectionné : " + charLabel + ". Vos aptitudes sont adaptées aux épreuves du château.";
+    hintEl.style.display = 'block';
+    startBtn.style.display = 'block';
+  }
+}
+
+function startGame() {
+  if (!G.char) return;
+  document.getElementById('s-prologue').classList.remove('active');
+  document.getElementById('s-hub').classList.add('active');
+  updateHub();
+}
+
+function goHub() {
+  document.querySelectorAll('.screen').forEach(function(s) {
+    s.classList.remove('active');
+  });
+  document.getElementById('s-hub').classList.add('active');
+  updateHub();
+}
+
+function updateHub() {
+  var badge = document.getElementById('hub-badge');
+  badge.textContent = G.char ? G.char.charAt(0).toUpperCase() + G.char.slice(1) : "";
+
+  // Mise à jour des éclats
+  for (var i = 0; i < 3; i++) {
+    var e = document.getElementById('e' + (i + 1));
+    if (G.eclats[i]) {
+      e.classList.add('found');
+    } else {
+      e.classList.remove('found');
+    }
+  }
+
+  var prog = document.getElementById('hub-progress');
+  var totalQuests = 8; 
+  var html = '';
+
+  prog.innerHTML = '';
+  
+  var questsDone = [
+    G.courDone, G.biblioDone, G.rempartsDone, G.cachotsDone, 
+    G.jardinDone, G.statuesDone, G.quizDone, G.combatDone
+  ];
+
+  for (var i = 0; i < totalQuests; i++) {
+    var span = document.createElement('div');
+    span.className = 'prog-dot ' + (questsDone[i] ? 'done' : '');
+    span.textContent = (i + 1);
+    prog.appendChild(span);
+    
+    if (i < totalQuests - 1) {
+      var line = document.createElement('div');
+      line.className = 'prog-line';
+      prog.appendChild(line);
+    }
+  }
+
+  renderLocations();
+}
+
+// --- RENDU DES LIEUX ---
+function renderLocations() {
+  var grid = document.getElementById('loc-grid');
+  grid.innerHTML = '';
+
+  var locations = [
+    { id: 'cour', name: 'La Cour intérieure', desc: 'Une fontaine et ses quatre symboles mystérieux.', done: G.courDone, icon: '☀️', available: true },
+    { id: 'biblio', name: 'La Bibliothèque ensorcelée', desc: 'Les livres flottent et défient la logique.', done: G.biblioDone, icon: '📚', available: true },
+    { id: 'remparts', name: 'Les Remparts', desc: 'Une porte scellée par un code secret.', done: G.rempartsDone, icon: '🛡️', available: G.courDone },
+    { id: 'cachots', name: 'Les Cachots oubliés', desc: 'Des inscriptions runiques à déchiffrer.', done: G.cachotsDone, icon: '🗝️', available: G.courDone },
+    { id: 'jardin', name: 'Le Jardinier Mystique', desc: 'Un chêne millénaire vous pose une devinette.', done: G.jardinDone, icon: '🌳', available: G.biblioDone },
+    { id: 'statues', name: 'Le Rituel des Statues', desc: 'Aligner les statues d\'acier.', done: G.statuesDone, icon: '⚔️', available: G.biblioDone },
+    { id: 'quiz', name: 'Quiz — Histoire de Gisors', desc: 'Vérifiez vos connaissances pour avancer.', done: G.quizDone, icon: '📜', available: true },
+    { id: 'combat', name: 'Le Dragon d\'Ombre', desc: 'Affronter la bête pour récupérer le passage.', done: G.combatDone, icon: '🐉', available: true },
+    { id: 'tour', name: 'La Tour du Mage', desc: 'Accéder à l\'autel et reconstituer le Cœur.', done: false, icon: '🏰', available: true }
+  ];
+
+  locations.forEach(function(loc) {
+    var card = document.createElement('div');
+    var statusIcon = loc.done ? '✓' : '➔';
+    
+    var stateClass = loc.done ? 'loc-card done' : (loc.available ? 'loc-card available' : 'loc-card locked');
+    
+    card.className = stateClass;
+    
+    if (loc.available || loc.done) {
+      card.onclick = function() {
+        goToScreen('s-' + loc.id);
+      };
+    }
+
+    card.innerHTML = `
+      <div class="loc-icon">${loc.icon}</div>
+      <div class="loc-info">
+        <div class="loc-name">${loc.name}</div>
+        <div class="loc-desc">${loc.desc}</div>
+      </div>
+      <div class="loc-status">${statusIcon}</div>
+    `;
+    grid.appendChild(card);
+  });
+
+  var hubHint = document.getElementById('hub-hint');
+  var totalDone = G.courDone && G.biblioDone && G.rempartsDone && G.cachotsDone &&
+                  G.jardinDone && G.statuesDone && G.quizDone && G.combatDone;
+
+  if (totalDone) {
+    hubHint.style.display = 'block';
+  } else {
+    hubHint.style.display = 'none';
+  }
+}
+
+function goToScreen(sName) {
+  document.querySelectorAll('.screen').forEach(function(s) {
+    s.classList.remove('active');
+  });
+  var targetScreen = document.getElementById(sName);
+  targetScreen.classList.add('active');
+
+  // Initialisations supplémentaires selon l'écran
+  if (sName === 's-cour') {
+    document.getElementById('hint-cour').textContent = HINTS[G.char].cour;
+    document.getElementById('hint-cour').style.display = 'block';
+  }
+  if (sName === 's-biblio') {
+    document.getElementById('hint-biblio').textContent = HINTS[G.char].biblio;
+    document.getElementById('hint-biblio').style.display = 'block';
+    initBiblio();
+  }
+  if (sName === 's-remparts') {
+    document.getElementById('hint-remparts').textContent = HINTS[G.char].remparts;
+    document.getElementById('hint-remparts').style.display = 'block';
+  }
+  if (sName === 's-cachots') {
+    document.getElementById('hint-cachots').textContent = HINTS[G.char].cachots;
+    document.getElementById('hint-cachots').style.display = 'block';
+  }
+  if (sName === 's-jardin') {
+    document.getElementById('hint-jardin').textContent = HINTS[G.char].jardin;
+    document.getElementById('hint-jardin').style.display = 'block';
+  }
+  if (sName === 's-statues') {
+    document.getElementById('hint-statues').textContent = HINTS[G.char].statues;
+    document.getElementById('hint-statues').style.display = 'block';
+  }
+  if (sName === 's-quiz') {
+    buildQuiz();
+  }
+  if (sName === 's-tour') {
+    var allDone = G.courDone && G.biblioDone && G.rempartsDone && G.cachotsDone &&
+                  G.jardinDone && G.statuesDone && G.quizDone && G.combatDone;
+    document.getElementById('tour-locked').style.display = allDone ? 'none' : 'block';
+    document.getElementById('tour-open').style.display = allDone ? 'block' : 'none';
+
+    // Afficher les étapes de la tour
+    document.getElementById('tour-step1').style.display = 'block';
+    document.getElementById('tour-choices').style.display = 'none';
+    document.getElementById('tour-msg').textContent = '';
+
+    for (var i = 1; i <= 3; i++) {
+      var te = document.getElementById('t-e' + i);
+      if (G.eclats[i - 1]) {
+        te.classList.add('found');
+      } else {
+        te.classList.remove('found');
+      }
+    }
+  }
+}
+
+// --- COUR ---
+function tryCour(sym, btn) {
+  var msg = document.getElementById('cour-msg');
+  if (sym === 'star') {
+    G.courDone = true;
+    G.eclats[0] = true;
+    msg.className = "msg good";
+    msg.textContent = "Bravo ! Le Cœur brille à nouveau. Éclat I obtenu.";
+    setTimeout(goHub, 1200);
+  } else {
+    G.courAtt++;
+    msg.className = "msg bad";
+    msg.textContent = "Symbole incorrect. Essayez encore.";
+    btn.classList.add('wrong');
+    setTimeout(function() { btn.classList.remove('wrong'); }, 400);
+    document.getElementById('cour-att').textContent = "Tentatives : " + G.courAtt;
+  }
+}
+
+// --- BIBLIOTHÈQUE ---
+var biblioState = {
+  books: ["Le Passé", "Le Présent", "Le Futur"],
+  selectedSourceIdx: null,
+  placed: [null, null, null]
+};
+
+function initBiblio() {
+  biblioState.selectedSourceIdx = null;
+  biblioState.placed = [null, null, null];
+  renderBiblio();
+}
+
+function renderBiblio() {
+  var srcDiv = document.getElementById('books-source');
+  var tgtDiv = document.getElementById('books-target');
+  srcDiv.innerHTML = '';
+  tgtDiv.innerHTML = '';
+
+  biblioState.books.forEach(function(bookText, idx) {
+    var item = document.createElement('div');
+    item.className = 'book-item';
+    item.onclick = function() { selectBook(idx); };
+    item.innerHTML = '<div class="book-num">0' + (idx + 1) + '</div><div>' + bookText + '</div>';
+    srcDiv.appendChild(item);
+  });
+
+  for (var i = 0; i < 3; i++) {
+    var slot = document.createElement('div');
+    slot.className = 'slot';
+    if (biblioState.placed[i] !== null) {
+      slot.className = 'slot has-book';
+      slot.innerHTML = '<div class="slot-num">S' + (i + 1) + '</div><div>' + biblioState.books[biblioState.placed[i]] + '</div><div class="slot-remove" onclick="removeBook(' + i + ')">✖</div>';
+    } else {
+      slot.innerHTML = '<div class="slot-num">S' + (i + 1) + '</div><div>Placer le livre ici...</div>';
+      slot.onclick = function(idxCopy) {
+        return function() { placeBook(idxCopy); };
+      }(i);
+    }
+    tgtDiv.appendChild(slot);
+  }
+}
+
+function selectBook(idx) {
+  biblioState.selectedSourceIdx = idx;
+  renderBiblio();
+}
+
+function placeBook(slotIdx) {
+  if (biblioState.selectedSourceIdx !== null) {
+    biblioState.placed[slotIdx] = biblioState.selectedSourceIdx;
+    biblioState.selectedSourceIdx = null;
+    renderBiblio();
+  }
+}
+
+function removeBook(slotIdx) {
+  biblioState.placed[slotIdx] = null;
+  renderBiblio();
+}
+
+function resetBiblio() {
+  initBiblio();
+}
+
+function checkBiblio() {
+  var msg = document.getElementById('biblio-msg');
+  if (biblioState.placed[0] === 0 && biblioState.placed[1] === 1 && biblioState.placed[2] === 2) {
+    G.biblioDone = true;
+    G.eclats[1] = true;
+    msg.className = "msg good";
+    msg.textContent = "Ordre correct ! La porte s'ouvre. Éclat II obtenu.";
+    setTimeout(goHub, 1200);
+  } else {
+    msg.className = "msg bad";
+    msg.textContent = "Mauvais ordre. Réessayez.";
+  }
+}
+
+// --- REMPARTS ---
+function checkRemparts() {
+  var val = document.getElementById('remparts-input').value.trim();
+  var msg = document.getElementById('remparts-msg');
+  
+  if (val === '1418' || val === '4528') {
+    G.rempartsDone = true;
+    G.eclats[2] = true;
+    msg.className = "msg good";
+    msg.textContent = "Le code est correct. Le troisième Éclat est à vous !";
+    setTimeout(goHub, 1200);
+  } else {
+    G.rempartsAtt++;
+    msg.className = "msg bad";
+    msg.textContent = "Code incorrect.";
+    document.getElementById('remparts-att').textContent = "Tentatives : " + G.rempartsAtt;
+  }
+}
+
+// --- CACHOTS ---
+function checkCachots() {
+  var val = document.getElementById('cachots-input').value.trim().toLowerCase();
+  var msg = document.getElementById('cachots-msg');
+  if (val === 'un tonneau' || val === 'tonneau' || val === 'ballon' || val === 'éponge') {
+    G.cachotsDone = true;
+    msg.className = "msg good";
+    msg.textContent = "Réponse correcte ! Vous débloquez la magie des lieux.";
+    setTimeout(goHub, 1200);
+  } else {
+    G.cachAtt++;
+    msg.className = "msg bad";
+    msg.textContent = "Ce n'est pas la bonne réponse.";
+    document.getElementById('cachots-att').textContent = "Tentatives : " + G.cachAtt;
+  }
+}
+
+// --- JARDIN ---
+function checkJardin() {
+  var val = document.getElementById('jardin-input').value.trim().toLowerCase();
+  var msg = document.getElementById('jardin-msg');
+  if (val === 'nuit') {
+    G.jardinDone = true;
+    msg.className = "msg good";
+    msg.textContent = "L'arbre sourit et s'écarte. Passage libéré.";
+    setTimeout(goHub, 1200);
+  } else {
+    G.jardinAtt++;
+    msg.className = "msg bad";
+    msg.textContent = "Mauvaise réponse.";
+    document.getElementById('jardin-att').textContent = "Tentatives : " + G.jardinAtt;
+  }
+}
+
+// --- STATUES ---
+var statueSeq = [];
+
+function tryStatue(elem) {
+  if (statueSeq.indexOf(elem) === -1) {
+    statueSeq.push(elem);
+    document.getElementById('statue-seq').textContent = statueSeq.join(', ');
+  }
+}
+
+function resetStatues() {
+  statueSeq = [];
+  document.getElementById('statue-seq').textContent = "Aucun";
+}
+
+function checkStatues() {
+  var msg = document.getElementById('statues-msg');
+  if (statueSeq.length === 3 && statueSeq[0] === 'vent' && statueSeq[1] === 'pierre' && statueSeq[2] === 'metal') {
+    G.statuesDone = true;
+    msg.className = "msg good";
+    msg.textContent = "Rituel validé ! L'épreuve est terminée.";
+    setTimeout(goHub, 1200);
+  } else {
+    msg.className = "msg bad";
+    msg.textContent = "Mauvais ordre. Recommencez.";
+    resetStatues();
+  }
+}
+
+// --- QUIZ ---
+var quizQuestions = [
+  {
+    q: "Quelle est la date de fondation ou d'un événement clé du château de Gisors en lien avec la légende ?",
+    options: ["1161 - Construction du donjon", "1214 - Bataille de Bouvines", "911 - Traité de Saint-Clair-sur-Epte", "1792 - Révolution"],
+    correct: 0
+  },
+  {
+    q: "Quel fleuve coule près de la ville de Gisors ?",
+    options: ["La Seine", "L'Epte", "La Loire", "La Somme"],
+    correct: 1
+  }
+];
+
+function buildQuiz() {
+  var cont = document.getElementById('quiz-container');
+  cont.innerHTML = '';
+  
+  quizQuestions.forEach(function(item, idx) {
+    var card = document.createElement('div');
+    card.className = 'quiz-card';
+    card.innerHTML = `
+      <div class="quiz-question">${item.q}</div>
+      <div class="quiz-options" id="qo-${idx}"></div>
+    `;
+    cont.appendChild(card);
+    
+    var optCont = document.getElementById('qo-' + idx);
+    item.options.forEach(function(optText, optIdx) {
+      var btn = document.createElement('button');
+      btn.className = 'quiz-btn';
+      btn.textContent = optText;
+      btn.onclick = function() { checkQuiz(idx, optIdx); };
+      optCont.appendChild(btn);
+    });
+  });
+}
+
+function checkQuiz(qIdx, optIdx) {
+  var msg = document.getElementById('quiz-msg');
+  if (quizQuestions[qIdx].correct === optIdx) {
+    G.quizDone = true;
+    msg.className = "msg good";
+    msg.textContent = "Bonne réponse ! Vos connaissances sont vérifiées.";
+    setTimeout(goHub, 1200);
+  } else {
+    msg.className = "msg bad";
+    msg.textContent = "Incorrect. Réessayez.";
+  }
+}
+
+// --- COMBAT ---
+function combatAction(action) {
+  var msg = document.getElementById('combat-msg');
+
+  if (action === 'attack') {
+    var damage = Math.floor(Math.random() * 20) + 15;
+    G.dragonHp -= damage;
+    msg.className = "msg good";
+    msg.textContent = "Vous infligez " + damage + " dégâts au dragon !";
+  } else if (action === 'spell') {
+    if (G.heroMp >= 30) {
+      G.heroMp -= 30;
+      var damage = 35;
+      G.dragonHp -= damage;
+      msg.className = "msg good";
+      msg.textContent = "Sortilège réussi ! Vous infligez " + damage + " dégâts.";
+    } else {
+      msg.className = "msg bad";
+      msg.textContent = "Pas assez de mana.";
+    }
+  } else if (action === 'heal') {
+    if (G.heroMp >= 20) {
+      G.heroMp -= 20;
+      G.heroHp = Math.min(100, G.heroHp + 25);
+      msg.className = "msg good";
+      msg.textContent = "Vous lancez un soin (+25 PV).";
+    } else {
+      msg.className = "msg bad";
+      msg.textContent = "Pas assez de mana.";
+    }
+  } else if (action === 'rest') {
+    G.heroMp = Math.min(50, G.heroMp + 20);
+    msg.className = "msg good";
+    msg.textContent = "Vous vous reposez et récupérez du mana.";
+  }
+
+  // Tour du dragon
+  if (G.dragonHp > 0) {
+    var dragonDamage = Math.floor(Math.random() * 15) + 5;
+    G.heroHp -= dragonDamage;
+    msg.textContent += " Le dragon réplique et vous inflige " + dragonDamage + " dégâts.";
+  }
+
+  updateCombatUI();
+
+  if (G.heroHp <= 0) {
+    msg.className = "msg bad";
+    msg.textContent = "Vous avez été vaincu… Retour au château.";
+    setTimeout(function() { goHub(); }, 1500);
+  } else if (G.dragonHp <= 0) {
+    G.combatDone = true;
+    msg.className = "msg good";
+    msg.textContent = "Vous avez terrassé le dragon ! Il libère le passage.";
+    setTimeout(goHub, 1200);
+  }
+}
+
+function updateCombatUI() {
+  document.getElementById('hero-hp').textContent = Math.max(0, G.heroHp);
+  document.getElementById('hero-mp').textContent = Math.max(0, G.heroMp);
+  document.getElementById('dragon-hp').textContent = Math.max(0, G.dragonHp);
+
+  document.getElementById('hero-hp-bar').style.width = Math.max(0, G.heroHp) + '%';
+  document.getElementById('hero-mp-bar').style.width = (Math.max(0, G.heroMp) * 2) + '%';
+  document.getElementById('dragon-hp-bar').style.width = Math.max(0, G.dragonHp) + '%';
+}
+
+// --- Énigme finale ---
+function checkTourPassword() {
+  var inputVal = document.getElementById('tour-input').value.trim().toLowerCase();
+  var msg = document.getElementById('tour-msg');
+
+  // Le mot attendu en réponse à l'énigme du Buisson de Bleu
+  if (inputVal === 'buisson de bleu' || inputVal === 'bleu' || inputVal === 'buisson') {
+    msg.className = "msg good";
+    msg.textContent = "Les runes s'illuminent d'une teinte azur. Le mécanisme de la porte cède dans un grincement sourd.";
+
+    setTimeout(function() {
+      document.getElementById('tour-step1').style.display = 'none';
+      document.getElementById('tour-choices').style.display = 'block';
+    }, 1200);
+  } else {
+    msg.className = "msg bad";
+    msg.textContent = "Ce n'est pas la bonne réponse. Réessayez.";
+  }
+}
+
+// --- ÉPILOGUE ET FIN ---
+function finalChoice(choice) {
+  var title = document.getElementById('fin-title');
+  var text = document.getElementById('fin-text');
+  var epi = document.getElementById('fin-epilogue');
+  
+  var charTitle = G.char ? G.char.charAt(0).toUpperCase() + G.char.slice(1) : "Héros";
+
+  if (choice === 'mage') {
+    title.textContent = "Le Savoir et l'Équilibre";
+    text.textContent = "Le Cœur Cristallin est confié à la sage Mage. Grâce à elle, la magie est canalisée pour protéger Gisors de l'oubli.";
+    epi.textContent = "Les habitants célèbrent le retour de la lumière. " + charTitle + " devient le gardien officiel de la paix et de l'histoire du royaume. Félicitations ! Vous avez triomphé de toutes les épreuves du château et percé le secret de la Tour du Mage. L'aventure se termine ici en beauté.";
+  } else if (choice === 'briser') {
+    title.textContent = "L'Explosion Magique";
+    text.textContent = "En brisant le Cœur, une onde de choc traverse le château, modifiant définitivement la nature de la magie.";
+    epi.textContent = "Les couloirs du donjon s'ouvrent sur de nouvelles dimensions, rendant l'histoire de Gesoritum éternelle et instable. " + charTitle + " s'enfonce dans l'inconnu. Félicitations ! Vous avez triomphé de toutes les épreuves du château et percé le secret de la Tour du Mage. L'aventure se termine ici en beauté.";
+  } else if (choice === 'sceller') {
+    title.textContent = "La Restauration Ancienne";
+    text.textContent = "Le Cœur est scellé une fois pour toutes dans l'autel de pierre. La menace de Tafar s'estompe derrière les murs de Gisors.";
+    epi.textContent = "Le royaume retrouve sa quiétude légendaire. La quête de " + charTitle + " reste gravée dans les archives. La paix est éternelle. Félicitations ! Vous avez triomphé de toutes les épreuves du château et percé le secret de la Tour du Mage. L'aventure se termine ici en beauté.";
+  }
+
+  document.querySelectorAll('.screen').forEach(function(s) {
+    s.classList.remove('active');
+  });
+  document.getElementById('s-fin').classList.add('active');
+}
+
+function restartGame() {
+  G = {
+    char: null,
+    eclats: [false,false,false],
+    courDone: false, biblioDone: false, rempartsDone: false, cachotsDone: false,
+    jardinDone: false, statuesDone: false, quizDone: false, combatDone: false,
+    courAtt: 0, cachAtt: 0, rempartsAtt: 0, jardinAtt: 0,
+    heroHp: 100, heroMp: 50, dragonHp: 100
+  };
+  
+  document.getElementById('remparts-input').value = '';
+  document.getElementById('cachots-input').value = '';
+  document.getElementById('jardin-input').value = '';
+  document.getElementById('tour-input').value = '';
+
+  document.querySelectorAll('.char-card').forEach(function(c) {
+    c.classList.remove('selected');
+  });
+  document.getElementById('char-hint-prologue').style.display = 'none';
+  document.getElementById('start-btn').style.display = 'none';
+
+  document.querySelectorAll('.screen').forEach(function(s) {
+    s.classList.remove('active');
+  });
+  document.getElementById('s-prologue').classList.add('active');
+}
+</script>
+
+</body>
+</html>
